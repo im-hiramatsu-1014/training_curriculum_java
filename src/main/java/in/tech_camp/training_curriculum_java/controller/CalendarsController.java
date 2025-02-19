@@ -59,6 +59,13 @@ public class CalendarsController {
       Map<String, Object> day_map = new HashMap<String, Object>();
       LocalDate currentDate = todaysDate.plusDays(x);
 
+      //曜日取得
+      int wdayNum = currentDate.getDayOfWeek().getValue();
+      if(wdayNum >= 7){
+        wdayNum = wdayNum - 7;
+      }
+      String wday = wdays[wdayNum];
+
       List<String> todayPlans = new ArrayList<>();
       for (PlanEntity plan : plans) {
           if (plan.getDate().equals(currentDate)) {
@@ -69,6 +76,7 @@ public class CalendarsController {
       day_map.put("month", currentDate.getMonthValue());
       day_map.put("date", currentDate.getDayOfMonth());
       day_map.put("plans", todayPlans);
+      day_map.put("wday", wday);
 
       weekDays.add(day_map);
     }
